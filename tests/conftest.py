@@ -7,7 +7,7 @@ from fcswrite import write_fcs
 
 @pytest.fixture
 def sample_fcs_path(tmp_path: Path) -> Path:
-    file_path = tmp_path / "small_sample.fcs"
+    file_path = tmp_path / "P10 L_Experiment_4L_A4.fcs"
     channel_names = ["FSC-A", "FSC-H", "SSC-A", "SSC-H", "BL1-H"]
     data = np.array(
         [

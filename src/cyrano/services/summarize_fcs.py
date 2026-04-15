@@ -1,3 +1,4 @@
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -9,6 +10,8 @@ SIGNAL_TYPES = {
     "H": "H (Height)",
     "W": "W (Width)",
 }
+
+_WELL_PATTERN = re.compile(r"_([A-H](?:1[0-2]|[1-9]))\.fcs$", re.IGNORECASE)
 
 
 @dataclass(frozen=True)
@@ -37,7 +40,19 @@ def _extract_channels_and_types(
     return seen_channels, seen_suffixes
 
 
+def extract_well(filename: str) -> str | None:
+    """Extract the well identifier (e.g. 'A4') from an FCS filename.
+
+    Expects the well to appear as the last segment before .fcs,
+    separated by an underscore: '..._A4.fcs' -> 'A4'.
+    Returns None if the filename doesn't match this convention.
+    """
+    match = _WELL_PATTERN.search(filename)
+    return match.group(1).upper() if match else None
+
+
 def summarize_fcs(source: Path) -> FCSInfo:
+    """Summarize the content of an FCS file (events, channels, signal types)."""
     dataframe = load_fcs_file(source)
     columns = [str(c) for c in dataframe.columns]
     channels, signal_types = _extract_channels_and_types(columns)

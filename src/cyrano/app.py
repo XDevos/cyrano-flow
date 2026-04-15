@@ -3,7 +3,7 @@ from tempfile import NamedTemporaryFile
 
 import streamlit as st
 
-from cyrano.services.summarize_fcs import summarize_fcs
+from cyrano.services.summarize_fcs import extract_well, summarize_fcs
 
 st.set_page_config(page_title="Cyrano", page_icon="👃", layout="centered")
 st.title("👃 CYRANO — Flow Cytometry Analysis Orchestrator")
@@ -18,13 +18,15 @@ with tab_explore:
             tmp.write(uploaded.read())
             tmp_path = Path(tmp.name)
 
+        well = extract_well(uploaded.name)
         info = summarize_fcs(tmp_path)
         tmp_path.unlink()
 
         st.table(
             {
-                "Property": ["Number of events", "Channels", "Signal types"],
+                "Property": ["Well", "Number of events", "Channels", "Signal types"],
                 "Value": [
+                    str(well),
                     str(info.event_count),
                     ", ".join(info.channels),
                     ", ".join(info.signal_types),
