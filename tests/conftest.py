@@ -20,3 +20,14 @@ def sample_fcs_path(tmp_path: Path) -> Path:
     )
     write_fcs(file_path, channel_names.copy(), data, compat_chn_names=False)
     return file_path
+
+
+@pytest.fixture
+def sample_plate_dir(tmp_path: Path) -> Path:
+    channel_names = ["FSC-A", "SSC-A"]
+    wells = ["A1", "A2", "B1", "B2"]
+    for i, well in enumerate(wells, start=1):
+        file_path = tmp_path / f"Experiment_{well}.fcs"
+        data = np.random.default_rng(i).random((i * 100, 2)).astype(np.float32)
+        write_fcs(file_path, channel_names.copy(), data, compat_chn_names=False)
+    return tmp_path

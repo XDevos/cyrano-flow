@@ -48,4 +48,20 @@ def test_main_with_no_command():
 
     assert result.exit_code == 0
     assert "explore" in result.output
-    assert "gui" in result.output
+
+
+def test_analyze_with_valid_directory(sample_plate_dir, tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    runner = CliRunner()
+    result = runner.invoke(main.main, ["analyze", str(sample_plate_dir)])
+
+    assert result.exit_code == 0
+    assert "Heatmap saved" in result.output
+    assert (tmp_path / "plate_heatmap.png").exists()
+
+
+def test_analyze_with_no_arguments():
+    runner = CliRunner()
+    result = runner.invoke(main.main, ["analyze"])
+
+    assert result.exit_code != 0

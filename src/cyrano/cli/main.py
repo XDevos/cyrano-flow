@@ -4,6 +4,7 @@ from pathlib import Path
 
 import click
 
+from cyrano.cli.analyze import analyze
 from cyrano.cli.compare import compare
 from cyrano.cli.explore import explore
 
@@ -15,6 +16,7 @@ def main(ctx: click.Context) -> None:
         click.echo(ctx.get_help())
 
 
+main.add_command(analyze)
 main.add_command(explore)
 main.add_command(compare)
 
