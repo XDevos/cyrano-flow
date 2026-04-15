@@ -2,7 +2,8 @@
 
 ## Installation
 
-`uv sync --extra dev`
+- `uv sync --extra dev`
+- `uv run pre-commit install`
 
 ## Development convention
 
