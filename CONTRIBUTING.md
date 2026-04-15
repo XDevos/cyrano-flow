@@ -18,3 +18,10 @@
     ```ruff check --fix            # Lint files in the current directory and fix any fixable errors.```
 - Formatter :
     ```ruff format                 # Format all files in the current directory.```
+
+## Layers architecture
+
+- io: file reading
+- analysis: pure functions
+- services: use-cases (glue)
+- cli: user interface
