@@ -8,7 +8,7 @@ from cyrano.services.summarize_fcs import summarize_fcs
 def explore_fcs_file(fcs_file: Path) -> None:
     info = summarize_fcs(fcs_file)
     print(f"Number of events: {info.event_count}")
-    print(f"Scatter channels: {', '.join(info.channels)}")
+    print(f"Channels: {', '.join(info.channels)}")
     print(f"Signal types: {', '.join(info.signal_types)}")
 
 

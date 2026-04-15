@@ -5,7 +5,7 @@ description = ""
 readme = "README.md"
 authors = [{ name = "Xavier DEVOS", email = "xavierdevos@outlook.fr" }]
 requires-python = ">=3.12"
-dependencies = ["click>=8.1", "fcsparser>=0.2.8"]
+dependencies = ["click>=8.1", "fcsparser>=0.2.8", "streamlit>=1.30"]
 
 [project.scripts]
 cyrano = "cyrano.cli:main"

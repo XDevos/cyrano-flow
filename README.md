@@ -1,4 +1,4 @@
-# cyrano-flow
+# CYRANO — Flow Cytometry Analysis Orchestrator
 
 ## Installation
 
