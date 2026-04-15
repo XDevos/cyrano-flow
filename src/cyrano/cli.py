@@ -1,3 +1,5 @@
+import subprocess
+import sys
 from pathlib import Path
 
 import click
@@ -5,14 +7,25 @@ import click
 from cyrano.services.summarize_fcs import summarize_fcs
 
 
-def explore_fcs_file(fcs_file: Path) -> None:
-    info = summarize_fcs(fcs_file)
-    print(f"Number of events: {info.event_count}")
-    print(f"Channels: {', '.join(info.channels)}")
-    print(f"Signal types: {', '.join(info.signal_types)}")
+@click.group(invoke_without_command=True)
+@click.pass_context
+def main(ctx: click.Context) -> None:
+    if ctx.invoked_subcommand is None:
+        click.echo(ctx.get_help())
 
 
-@click.command()
+@main.command()
 @click.argument("fcs_file", type=click.Path(exists=True, path_type=Path))
-def main(fcs_file: Path) -> None:
-    explore_fcs_file(fcs_file)
+def explore(fcs_file: Path) -> None:
+    info = summarize_fcs(fcs_file)
+    click.echo(f"Number of events: {info.event_count}")
+    click.echo(f"Channels: {', '.join(info.channels)}")
+    click.echo(f"Signal types: {', '.join(info.signal_types)}")
+
+
+@main.command()
+def gui() -> None:
+    app_path = Path(__file__).parent / "app.py"
+    subprocess.run(
+        [sys.executable, "-m", "streamlit", "run", str(app_path)], check=True
+    )
