@@ -1,0 +1,23 @@
+[project]
+name = "cyrano"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+authors = [
+    { name = "Xavier DEVOS", email = "xavierdevos@outlook.fr" }
+]
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+cyrano = "cyrano:main"
+
+[build-system]
+requires = ["uv_build>=0.11.3,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+    "ruff>=0.15.10",
+]
